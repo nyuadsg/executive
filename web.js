@@ -4,8 +4,8 @@ var express = require('express')
 	, path = require('path');
 var project = require('./routes/project')
 	, documents = require('./routes/documents');
-var passport = require('passport')
-  , NYUPassportStrategy = require('passport-nyu').Strategy;
+// var passport = require('passport')
+  // , NYUPassportStrategy = require('passport-nyu').Strategy;
 
 // prepare database
 var mongoose = require('mongoose');
@@ -32,8 +32,8 @@ app.configure(function(){
 	app.use(express.methodOverride());
 	app.use(express.cookieParser( process.env.SECRET ));
 	app.use(express.session({ key: 'status.sess', secret: process.env.SECRET }));
-	app.use(passport.initialize());
-	app.use(passport.session());
+	// app.use(passport.initialize());
+	// app.use(passport.session());
 	app.use(app.router);
 	app.use(require('stylus').middleware(__dirname + '/public'));
 	app.use(express.static(__dirname + '/public'));
