@@ -1,0 +1,19 @@
+{
+	"name": "status",
+	"version": "0.0.1",
+	"dependencies": {
+	    "express": "3.0.5",
+		"mongodb": "*",
+		"mongoose": "3.5.3",
+		"jade": "*",
+		"stylus": "*",
+		"passport": "*",
+		"passport-google": "*",
+		"passport-nyu": "*",
+		"github": "*"
+	},
+	"engines": {
+		"node": "0.8.x",
+		"npm": "1.1.x"
+	}
+}
