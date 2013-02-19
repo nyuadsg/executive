@@ -12,22 +12,37 @@ github.authenticate({
 
 exports.index = function( req, res ) {
 	var pages = [
-		{
-			url: process.env.BASE_URL + '/documents/contribute',
-			title: 'Contribute to the Research & Development Committee'
-		},
-		{
-			url: process.env.BASE_URL + '/projects',
-			title: 'View all projects'
-		}
+		// {
+		// 	url: process.env.BASE_URL + '/documents/contribute',
+		// 	title: 'Contribute to the Research & Development Committee'
+		// }
 	]
 	res.render("index", {
-		title: "Research & Development Committee",
+		title: "Student Government at NYU Abu Dhabi",
 		pages: pages
 	});
 }
 
-exports.view = function( req, res ) {
+exports.file = function( req, res ) {
+	var ext = req.params.ext;
+	
+	github.repos.getContent({
+		user: 'nyuadsg',
+		repo: 'executive',
+		path: 'resources/' + req.params.slug + '.' + ext
+	}, function( err, data) {
+		var contents = new Buffer(data.content, 'base64');
+		contents = contents.toString();
+		
+		if( ext == 'pdf' )
+		{
+			res.setHeader('Content-Type', 'application/pdf');
+		}
+		res.send( contents );		
+	});
+};
+
+exports.md = function( req, res ) {
 	github.repos.getContent({
 		user: 'nyuadsg',
 		repo: 'rdc',

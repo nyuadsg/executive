@@ -49,42 +49,43 @@ app.get('/', documents.index);
 app.get('/projects', project.list);
 // app.get('/projects/edit', project.edit);
 app.post('/project/:slug/update', project.update);
-app.get('/document/:slug', documents.view)
+app.get('/document/:slug', documents.md);
+app.get('/file/:slug.:ext', documents.file);
 
 // authentication with passport
-passport.serializeUser(function(user, done) {
-	done(null, user.token);
-});
-
-passport.deserializeUser(function(token, done) {
-	done(null, token);
-});
+// passport.serializeUser(function(user, done) {
+// 	done(null, user.token);
+// });
+// 
+// passport.deserializeUser(function(token, done) {
+// 	done(null, token);
+// });
 
 // oauth
-passport.use('nyu-passport', new NYUPassportStrategy({
-	clientID: process.env.PASSPORT_ID,
-	clientSecret: process.env.PASSPORT_SECRET,
-	callbackURL: process.env.BASE_URL + '/auth/provider/callback'
-	},
-	function(accessToken, refreshToken, profile, done) {
-		console.log( profile );
-		user = {
-			token: accessToken,
-			netID: profile.netID
-		}
-		done(null, user);
-	}
-));
+// passport.use('nyu-passport', new NYUPassportStrategy({
+// 	clientID: process.env.PASSPORT_ID,
+// 	clientSecret: process.env.PASSPORT_SECRET,
+// 	callbackURL: process.env.BASE_URL + '/auth/provider/callback'
+// 	},
+// 	function(accessToken, refreshToken, profile, done) {
+// 		console.log( profile );
+// 		user = {
+// 			token: accessToken,
+// 			netID: profile.netID
+// 		}
+// 		done(null, user);
+// 	}
+// ));
 
 // google auth
-app.get('/auth/provider', passport.authenticate('nyu-passport'));
+// app.get('/auth/provider', passport.authenticate('nyu-passport'));
 
 // The OAuth 2.0 provider has redirected the user back to the application.
 // Finish the authentication process by attempting to obtain an access
 // token.  If authorization was granted, the user will be logged in.
 // Otherwise, authentication has failed.
-app.get('/auth/provider/callback', 
-	passport.authenticate('nyu-passport', { successRedirect: '/', failureRedirect: '/auth/provider' }));
+// app.get('/auth/provider/callback', 
+// 	passport.authenticate('nyu-passport', { successRedirect: '/', failureRedirect: '/auth/provider' }));
 
 // start listening
 var port = process.env.PORT || 5000;
